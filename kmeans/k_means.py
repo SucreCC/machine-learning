@@ -16,10 +16,17 @@ class KMeans:
             # get the distance form centroids to other sample points
             closest_centroids_ids = KMeans.centroids_find_closest(self.data, centroids)
 
-
     @staticmethod
     def centroids_init(data, num_clusters):
         num_examples = data.shape[0]
         random_ids = np.random.permutation(num_examples)
         centroids = data[random_ids[:num_clusters], :]
         return centroids
+
+    def centroids_find_closest(self, data, centroids):
+        num_examples = self.data.shape[0]
+        num_centroids = centroids.shape[0]
+        closest_centroids_ids = np.zeros((num_examples, 1))
+        for example_index in range(num_examples):
+            for centroid_index in range(num_centroids):
+                distance_diff = data[example_index, :] - centroids[centroid_index, :]
