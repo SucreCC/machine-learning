@@ -27,12 +27,12 @@ class KMeans:
         return centroids
 
     @staticmethod
-    def centroids_find_closest(self, data, centroids):
-        num_examples = self.data.shape[0]
+    def centroids_find_closest(data, centroids):
+        num_examples = data.shape[0]
         num_centroids = centroids.shape[0]
         closest_centroids_ids = np.zeros((num_examples, 1))
         for example_index in range(num_examples):
-            distance = np.zeros(num_examples, 1)
+            distance = np.zeros((num_examples, 1))
             for centroid_index in range(num_centroids):
                 distance_diff = data[example_index, :] - centroids[centroid_index, :]
                 distance[centroid_index] = np.sum(distance_diff ** 2)
@@ -40,10 +40,10 @@ class KMeans:
         return closest_centroids_ids
 
     @staticmethod
-    def centroids_compute(cls, data, closest_centroids_ids, num_clusters):
+    def centroids_compute(data, closest_centroids_ids, num_clusters):
         num_features = data.shape[1]
         centroids = np.zeros((num_clusters, num_features))
-        for centroids_id in range(num_clusters):
-            closest_ids = closest_centroids_ids == centroids_id
-            centroids[closest_ids] = np.mean(data[closest_ids.flatten(), :], axis=0)
+        for centroid_id in range(num_clusters):
+            closest_ids = closest_centroids_ids == centroid_id
+            centroids[centroid_id] = np.mean(data[closest_ids.flatten(), :], axis=0)
         return centroids
